@@ -1,0 +1,15 @@
+---
+servers:
+  types:
+   jedi: 
+     - luke
+     - yoda
+   sith:
+     - vader
+     - sidious 
+sources:
+  - /naboo
+destiny: /coruscant
+mail: false
+to: death-start@GalacticEmpire.com
+source: darth-vader@GalacticEmpire.com
