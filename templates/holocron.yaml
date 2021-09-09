@@ -1,15 +1,17 @@
 ---
 servers:
-  types:
+  type:
    jedi: 
-     - luke
-     - yoda
+     - luke:
+       - lightsaber
+     - yoda:
+       - holocron
    sith:
-     - vader
-     - sidious 
-sources:
-  - /naboo
+     - vader:
+       - helmet
+     - sidious:
+       - lightning
 destiny: /coruscant
-mail: false
+mail: true
 to: death-start@GalacticEmpire.com
 source: darth-vader@GalacticEmpire.com

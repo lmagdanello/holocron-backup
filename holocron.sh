@@ -1,9 +1,5 @@
 #!/bin/bash
 # Leonardo Araujo, 2020-10-01, leonardo.araujo@atos.net
-#
-#
-#
-#
 
 # GLOBAL VARS
 DAY=$(date +%Y-%m-%d)
@@ -102,7 +98,7 @@ Backup () {
 
     echo "Starting backup:$(yq r ${CONFIG} 'sources' | tr -d '-') - $(date)" >> ${LOG}
 
-    TYPES=$(yq r ${CONFIG} --printMode p "servers.types*.*" | awk -F '.' '{print $NF}' | uniq)
+    TYPES=$(yq r ${CONFIG} --printMode p "servers.type*.*" | awk -F '.' '{print $NF}' | uniq)
     BACKUPDIR=$(yq r ${CONFIG} destiny)    
 
     for type in ${TYPES};
@@ -115,24 +111,28 @@ Backup () {
 
     echo "Backup in: ${BACKUPDIR}" >> ${LOG}
 
-    for t in ${TYPES};
+    for type in ${TYPES};
         do
-          echo -e "${t}: $(yq r ${CONFIG} --printMode pv "servers.types*.*.*" | grep -w ${t} | awk -F ':' '{print $NF}' | xargs)" >> ${LOG}
-          for server in $(yq r ${CONFIG} --printMode pv "servers.types*.*.*" | grep -w ${t} | awk -F ':' '{print $NF}' | xargs);
+          for server in $(yq r ${CONFIG} --printMode p "servers.type.${type}.*.*" | awk -F '.' '{print $NF}'| uniq | xargs);
             do
-               ssh ${server} tar czfP - /etc > ${BACKUPDIR}/${t}/etc_${server}.tar.gz 
-               if [ "$?" -eq "0" ];
-                  then 
-                      echo -e "${GREEN}${server} - Backup completed!${NC}" >> ${LOG}
-                      local -g STATUS="COMPLETED"
-               else
-                      echo -e "${RED}${server} - Backup error!${NC}" >> ${LOG}
-                      local -g STATUS="FAILED"
-               fi
+	  	for source in $(yq r ${CONFIG} --printMode pv "servers.type.${type}.*.${server}" | awk -F ':' '{print $NF}' | sed 's/-/ /g' | uniq | xargs);
+		do
+
+               		ssh ${server} sudo tar czfP - /${source} > ${BACKUPDIR}/${type}/${source}_${server}.tar.gz
+
+               		if [ "$?" -eq "0" ];
+                  	then 
+                     		echo -e "${GREEN}${server} - Backup completed!${NC}" >> ${LOG}
+                      		local -g STATUS="COMPLETED"
+               		else
+                      		echo -e "${RED}${server} - Backup error!${NC}" >> ${LOG}
+                      		local -g STATUS="FAILED"
+               		fi
+		done
             done
         done
 
-    echo "Backup finished" >> ${LOG}
+    echo "Backup finished!" >> ${LOG}
 
     end=$(date +%s)
     seconds=$(echo "$end - $start" | bc)
