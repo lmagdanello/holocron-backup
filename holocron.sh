@@ -117,15 +117,14 @@ Backup () {
             do
 	  	for source in $(yq r ${CONFIG} --printMode pv "servers.type.${type}.*.${server}" | awk -F ':' '{print $NF}' | sed 's/-/ /g' | uniq | xargs);
 		do
-
-               		ssh ${server} sudo tar czfP - /${source} > ${BACKUPDIR}/${type}/${source}_${server}.tar.gz
+               		ssh ${server} sudo tar czfP - /${source} > ${BACKUPDIR}/${type}/$(echo ${source} | awk -F '/' '{print $NF}')_${server}.tar.gz
 
                		if [ "$?" -eq "0" ];
                   	then 
-                     		echo -e "${GREEN}${server} - Backup completed!${NC}" >> ${LOG}
+                     		echo -e "${GREEN}${server} - ${source} - Backup completed!${NC}" >> ${LOG}
                       		local -g STATUS="COMPLETED"
                		else
-                      		echo -e "${RED}${server} - Backup error!${NC}" >> ${LOG}
+                      		echo -e "${RED}${server} - ${source } - Backup error!${NC}" >> ${LOG}
                       		local -g STATUS="FAILED"
                		fi
 		done
