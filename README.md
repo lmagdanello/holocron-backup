@@ -20,20 +20,22 @@ wget https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64 -O /
 servers:
   types:                                <-- types of servers (can be logins, managements nodes, etc...)
    jedi: 
-     - luke                             <-- servers (RSA key required)
-     - yoda
+     - luke:                             <-- servers (RSA key required)
+       - lightsaber                      <-- directory of host to be backed up
+     - yoda:
+       - holocron
    sith:
-     - vader
-     - sidious 
-sources:                                <-- remote dir to be backup
-  - /naboo
+     - vader:
+       - helmet
+     - sidious:
+       - lightning
 destiny: /coruscant                     <-- local dir where it will be saved
-mail: false                             <-- works with the mail function, to send an email with the status of the backup - switch to 'true' for thath
+mail: false                             <-- works with the mail function, to send an email with the status of the backup - switch to 'true' for that
 to: death-start@GalacticEmpire.com      <-- destination email
 source: darth-vader@GalacticEmpire.com  <-- source mail
 ```
 --- 
-To install, clone the repo and give execute permissions to the holocron.sh script (chmod +x holocron.sh) and execute:
+To install: clone the repo, give execute permissions to the holocron.sh script (chmod +x holocron.sh) and execute:
 
 ```console
 ./holocron.sh -i || ./holocron.sh --install
@@ -48,7 +50,5 @@ A log file will also be created (/var/log/holocron/holocron.log), which saves th
 TO-DO:
 - [ ] E-mail template
 - [ ] Tuning transfer, because is taking a long time yet
+- [ ] Log rotate
 ---
-
-Author:
-*Leonardo Araujo - leonardo.araujo@atos.net*
