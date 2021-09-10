@@ -124,7 +124,7 @@ Backup () {
                      		echo -e "${GREEN}${server} - ${source} - Backup completed!${NC}" >> ${LOG}
                       		local -g STATUS="COMPLETED"
                		else
-                      		echo -e "${RED}${server} - ${source } - Backup error!${NC}" >> ${LOG}
+                      		echo -e "${RED}${server} - ${source} - Backup error!${NC}" >> ${LOG}
                       		local -g STATUS="FAILED"
                		fi
 		done
