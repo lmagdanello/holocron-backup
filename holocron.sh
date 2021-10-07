@@ -142,7 +142,7 @@ Mail() {
     to=$(yq r ${CONFIG} to)
     source=$(yq r ${CONFIG} source)
 
-    echo -e "Weekly Backup of Santos Dumont Cluster:
+    echo -e "Holocron Backup:
         \nBackup status: ${STATUS}
         \nHolocron YAML configuration:\n
 $(yq r ${CONFIG} --prettyPrint -j)
