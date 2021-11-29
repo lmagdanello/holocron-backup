@@ -87,12 +87,28 @@ Config() {
 
 }
 
+Rotate() {
+
+    DAYS=$(yq r ${CONFIG} 'rotate')
+    TYPES=$(yq r ${CONFIG} --printMode p "servers.type*.*" | awk -F '.' '{print $NF}' | uniq)
+    BACKUPDIR=$(yq r ${CONFIG} destiny)
+
+    for type in ${TYPES}; do
+	find ${BACKUPDIR}/${type} -mtime +${DAYS} -exec rm -f {} \;
+    done
+
+}
+
 Backup() {
 
     Check
     start=$(date +%s)
 
     echo "Starting backup:$(yq r ${CONFIG} 'sources' | tr -d '-') - $(date)" >>${LOG}
+
+    DAYS=$(yq r ${CONFIG} 'rotate')
+    echo "First rotate ${BACKUPDIR}: [${DAYS} days]" >>${LOG}
+    Rotate
 
     TYPES=$(yq r ${CONFIG} --printMode p "servers.type*.*" | awk -F '.' '{print $NF}' | uniq)
     BACKUPDIR=$(yq r ${CONFIG} destiny)

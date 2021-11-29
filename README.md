@@ -30,6 +30,7 @@ servers:
      - sidious:
        - lightning
 destiny: /coruscant                     <-- local dir where it will be saved
+rotate: 20				<-- days to rotate the backup
 mail: false                             <-- works with the mail function, to send an email with the status of the backup - switch to 'true' for that
 to: death-start@GalacticEmpire.com      <-- destination email
 source: darth-vader@GalacticEmpire.com  <-- source mail
@@ -50,5 +51,5 @@ A log file will also be created (/var/log/holocron/holocron.log), which saves th
 TO-DO:
 - [ ] E-mail template
 - [ ] Tuning transfer, because is taking a long time yet
-- [ ] Log rotate
+- [ X ] Log rotate
 ---

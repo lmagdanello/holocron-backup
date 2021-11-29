@@ -12,6 +12,7 @@ servers:
      - sidious:
        - lightning
 destiny: /coruscant
+rotate: 20
 mail: true
 to: death-start@GalacticEmpire.com
 source: darth-vader@GalacticEmpire.com
