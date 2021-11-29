@@ -51,5 +51,5 @@ A log file will also be created (/var/log/holocron/holocron.log), which saves th
 TO-DO:
 - [ ] E-mail template
 - [ ] Tuning transfer, because is taking a long time yet
-- [ X ] Log rotate
+- [X] Log rotate
 ---
